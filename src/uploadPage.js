@@ -1,54 +1,89 @@
 import axios from 'axios';
-import React,{Component} from 'react'; 
+import React,{useState} from 'react'; 
 import { ipAddress } from './constants';
+import UploadModal from './UploadModal';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 axios.defaults.baseURL = `http://${ipAddress}`;
 
+const UploadPage = () => { 
 
-class UploadPage extends Component { 
+  const [selectedFile, setSelectedFile] = useState({});
+  const [showMessage, setShowMessage] = useState(false);
+  const [file, setFile] = useState({});
 
-    state = { 
-  
-      selectedFile: null
-    }; 
-     
+  const [
+    showSuccessfullUploadMessage,
+    setShowSuccessfullUploadMessage,
+  ] = useState(false);
+  const [
+    showFailedUploadMessage,
+    setShowFailedUploadMessage,
+  ] = useState(false);
 
-    onFileChange = event => { 
-      this.setState({ selectedFile: event.target.files[0] }); 
+    
+    const onFileChange = event => { 
+      setSelectedFile(event.target.files[0]);
+      setFile(event.target);
     };  
      
-    onFileUpload = () => { 
-      const formData = new FormData(); 
-     
-      formData.append( 
-        "file", 
-        this.state.selectedFile, 
-        this.state.selectedFile.name 
-      ); 
-     
-      console.log(this.state.selectedFile); 
-     
-      console.log(axios.defaults.baseURL);
-      axios.post('/api/uploadfile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        } 
-     }); 
+    const onFileUpload = () => { 
+      try{
+        const formData = new FormData(); 
+      
+        formData.append( 
+          "file", 
+          selectedFile, 
+          selectedFile.name 
+        );
+            // console.log(selectedFile); 
+      
+        // console.log(axios.defaults.baseURL);
+        axios.post('/api/uploadfile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          } 
+      }).then(resp => {
+        if(resp.status===204){
+          setShowSuccessfullUploadMessage(true);
+          setShowFailedUploadMessage(false);
+        }
+        else{
+          setShowFailedUploadMessage(true);
+          setShowSuccessfullUploadMessage(false);
+        }
+        setShowMessage(true);
+      });
+    
+    }
+      catch(error){
+        setShowFailedUploadMessage(true);
+        setShowSuccessfullUploadMessage(false);
+        setShowMessage(true);
+      }
+      setSelectedFile({});
+      file.value='';
 
     }; 
+
+    const isEmpty = (obj) => {
+      for (const value in obj) {
+        return false;
+      }
+      return true;
+    }
      
-    fileData = () => { 
-      if (this.state.selectedFile) { 
-          
+    const fileData = () => { 
+      if (!isEmpty(selectedFile)) { 
+          console.log(selectedFile);
         return ( 
           <div> 
             <h2>File Details:</h2> 
-            <p>File Name: {this.state.selectedFile.name}</p> 
-            <p>File Type: {this.state.selectedFile.type}</p> 
+            <p>File Name: {selectedFile.name}</p> 
+            <p>File Type: {selectedFile.type}</p> 
             <p> 
               Last Modified:{" "} 
-              {this.state.selectedFile.lastModifiedDate.toDateString()} 
+              {selectedFile.lastModifiedDate.toDateString()} 
             </p> 
           </div> 
         ); 
@@ -62,7 +97,7 @@ class UploadPage extends Component {
       } 
     }; 
      
-    render() { 
+ 
       return ( 
         <div> 
             <h1> 
@@ -72,15 +107,25 @@ class UploadPage extends Component {
               Upload a csv file! 
             </h3> 
             <div> 
-                <input type="file" onChange={this.onFileChange} /> 
-                <button onClick={this.onFileUpload}> 
+                <input type="file" onChange={onFileChange} /> 
+                <button onClick={onFileUpload}> 
                   Upload! 
                 </button> 
             </div> 
-          {this.fileData()} 
+          {fileData()} 
+          <UploadModal
+                        showSuccessfull={showSuccessfullUploadMessage}
+                        showFailed={showFailedUploadMessage}
+                        setShowSuccessfull={
+                          setShowSuccessfullUploadMessage
+                        }
+                        setShowFailed={setShowFailedUploadMessage}
+                        show={showMessage}
+                        setShow={setShowMessage}
+                      />
         </div> 
       ); 
-    } 
+
   } 
   
   export default UploadPage; 
