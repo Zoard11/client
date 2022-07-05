@@ -168,12 +168,12 @@ const InformationTable = () => {
                         <button className="page-link" onClick={() => changePageButton(currentPage+1)}>{currentPage+1}</button>
                         </li>
                     )}  
-                    {currentPage+1 < lastPage && (
+                    {(currentPage+1 < lastPage && lastPage !==-1) && (
                         <li className="page-item ">
                         <button className="page-link" onClick={() =>changePageButton(currentPage+2)}>{currentPage+2}</button>
                         </li>
                     )}  
-                    {currentPage+2 <lastPage && (
+                    {(currentPage+2 < lastPage && lastPage !==-1)  && (
                         <li className="page-item ">
                         <button className="page-link">...</button>
                         </li>

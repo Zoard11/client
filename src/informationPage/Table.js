@@ -7,7 +7,7 @@ type Props = {
 };
 
 const columns = [{  
-    Header: 'ID',  
+    Header: 'COSING Ref No',  
     accessor: 'COSING Ref No',
    }
    ,{  
@@ -46,7 +46,11 @@ const columns = [{
     {  
     Header: 'Update Date',  
     accessor: 'Update Date',
-    }
+    },
+    {  
+      Header: 'Id',  
+      accessor: 'Id',
+      }
 ]
 
 function Table(props: Props) {
@@ -62,8 +66,14 @@ function Table(props: Props) {
   return (
     <table className="table table-striped table-sm">
       <thead>
+      {/* <tr>
+      
+        </tr> */}
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
+              <th>
+              EDIT
+              </th>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} scope="col">
                 {column.render("Header")}
@@ -73,10 +83,15 @@ function Table(props: Props) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
+        
         {rows.map((row) => {
           prepareRow(row);
           return (
+
             <tr {...row.getRowProps()}>
+              <td>
+                    button 
+              </td>
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
