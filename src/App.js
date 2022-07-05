@@ -1,7 +1,7 @@
 
 import React,{Component} from 'react'; 
 import {Route} from 'react-router-dom';
-import InformationPage from './informationPage';
+import InformationPage from './informationPage/InformationPage';
 import UploadPage from './uploadPage';
 import NavBar from './navbar';
 import {BrowserRouter,Routes } from 'react-router-dom';

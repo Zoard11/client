@@ -1,20 +1,21 @@
 import axios from 'axios';
 import React,{useState,useEffect } from 'react'; 
-import { ipAddress } from './constants';
+import { ipAddress } from '../constants';
 import Table from "./Table";
-
+import { useBetween } from 'use-between';
+import {useShareableState} from './UseBetween';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 axios.defaults.baseURL = `http://${ipAddress}`;
 
-const InformationPage = () => { 
+const InformationTable = () => { 
 
     const [ingredients, setIngredients] = useState([]); 
+    const { inputText,currentPage, setCurrentPage} = useBetween(useShareableState);
 
     const [loading,setLoading]=useState(false);
     const [error, setError] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(1);
     const [dataPerPage, setDataPerPage] = useState(10);
 
     const [lastPage, setLastPage] = useState(-1);
@@ -51,13 +52,6 @@ const InformationPage = () => {
         
     };
 
-    const [inputText, setInputText] = useState("");
-
-    let inputHandler = (e) => {
-
-        setInputText(e);
-        setCurrentPage(1);
-    };
     
 
     useEffect(() => {
@@ -76,7 +70,7 @@ const InformationPage = () => {
                 params: {
                     dataPerPage: dataPerPage,
                     indexOfFirstResult: indexOfFirstResult,
-                    searrch: inputText,
+                    search:inputText,
                 }
             })
             .then(resp => {
@@ -133,16 +127,6 @@ const InformationPage = () => {
     return ( 
         <div>
             <h1>Ingredients</h1>
-
-            {/* <div className="search">
-                <input type="text" placeholder='Search...' onChange={ (event) => inputHandler(event.target.value)}/>
-            </div> */}
-             <div class="input-group rounded">
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onChange={(event) => {
-                    inputHandler(event.target.value);
-                  }}/>
-           
-            </div>
 
     
             <Table data={ingredients} />
@@ -210,4 +194,4 @@ const InformationPage = () => {
 
   } 
   
-  export default InformationPage; 
+  export default InformationTable; 
