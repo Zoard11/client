@@ -1,28 +1,25 @@
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import InformationPage from "./informationPage/InformationPage";
+import UploadPage from "./uploadPage";
+import NavBar from "./navbar";
+import { BrowserRouter, Routes } from "react-router-dom";
 
-import React,{Component} from 'react'; 
-import {Route} from 'react-router-dom';
-import InformationPage from './informationPage/InformationPage';
-import UploadPage from './uploadPage';
-import NavBar from './navbar';
-import {BrowserRouter,Routes } from 'react-router-dom';
-
-
-class App extends Component { 
-  
-    render() { 
-      return ( 
-        <div className='App '> 
+class App extends Component {
+  render() {
+    return (
+      <div className="App ">
         <BrowserRouter>
-          <NavBar/>
+          <NavBar />
 
-          <Routes >
-            <Route exact path ='/' element={<InformationPage/>}/>
-            <Route exact path ='/upload' element={<UploadPage/>}/>
-          </Routes >
+          <Routes>
+            <Route exact path="/" element={<InformationPage />} />
+            <Route exact path="/upload" element={<UploadPage />} />
+          </Routes>
         </BrowserRouter>
-        </div> 
-      );  
-    } 
-  } 
-  
-  export default App; 
+      </div>
+    );
+  }
+}
+
+export default App;

@@ -1,14 +1,19 @@
-import {useState } from 'react'; 
+import { useState } from "react";
 
 export const useShareableState = () => {
+  const [inputText, setInputText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [editIngredientId, setEditIngredientId] = useState(-1);
+  const [showEditMessage, setShowEditMessage] = useState(false);
 
-    const [inputText, setInputText] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-
-    return {
-        inputText,
-         setInputText,
-         currentPage,
-        setCurrentPage
-    };
+  return {
+    inputText,
+    setInputText,
+    currentPage,
+    setCurrentPage,
+    editIngredientId,
+    setEditIngredientId,
+    showEditMessage,
+    setShowEditMessage,
   };
+};

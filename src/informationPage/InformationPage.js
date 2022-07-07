@@ -1,17 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import InformationSearch from './InformationSearch';
-import InformationTable from './InformationTable';
-
+import InformationSearch from "./InformationSearch";
+import InformationTable from "./InformationTable";
 
 const InformationPage = () => {
   return (
-
-        <div>
-            <InformationSearch />
-            <InformationTable/>
-        </div>
-
+    <div>
+      <InformationSearch />
+      <InformationTable />
+    </div>
   );
 };
 
