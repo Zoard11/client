@@ -8,5 +8,5 @@ export interface InterfaceInci {
   "Chem/IUPAC Name / Description": string;
   Restriction: string;
   Function: string;
-  "Update Date": string;
+  "Update Date": Date;
 }

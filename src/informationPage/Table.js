@@ -3,6 +3,7 @@ import { useTable } from "react-table";
 import { InterfaceInci } from "./Types";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
+import moment from "moment";
 
 type Props = {
   data: InterfaceInci[],
@@ -24,7 +25,7 @@ const columns = [
   },
   {
     Header: "Ph. Eur. Name",
-    accessor: "Ph. Eur. Name",
+    accessor: (d) => d["Ph. Eur. Name"],
   },
   {
     Header: "CAS No",
@@ -48,7 +49,7 @@ const columns = [
   },
   {
     Header: "Update Date",
-    accessor: "Update Date",
+    accessor: (d) => moment(d["Update Date"]).format("YYYY-MM-DD"),
   },
   {
     Header: "Id",
@@ -63,26 +64,29 @@ function Table(props: Props) {
     data,
   });
 
-  const { setEditIngredientId } = useBetween(useShareableState);
+  const { setEditIngredientId,setDeleteIngredientId } = useBetween(useShareableState);
 
   const editButton = (id) => {
     setEditIngredientId(id);
   };
 
+  const deleteButton = (id) => {
+    setDeleteIngredientId(id);
+  };
+
   return (
     <table className="table table-striped table-sm">
       <thead>
-        {/* <tr>
-      
-        </tr> */}
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            <th>EDIT</th>
+            
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} scope="col">
                 {column.render("Header")}
               </th>
             ))}
+            <th></th>
+            <th></th>
           </tr>
         ))}
       </thead>
@@ -91,16 +95,15 @@ function Table(props: Props) {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              <td>
-                <button onClick={() => editButton(row.id)}>
-                  button id:
-                  {row.id}
-                </button>
-              </td>
+
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
-            </tr>
+              <td>
+              <button className="btn btn-default" onClick={() => editButton(row.id)}><i className="bi bi-pencil-square"></i>Edit</button>
+                </td>
+              <td><button className="delete" onClick={() => deleteButton(row.id)}><i className="bi bi-trash3-fill"></i>Delete</button></td>
+            </tr> 
           );
         })}
       </tbody>

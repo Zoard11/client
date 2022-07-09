@@ -5,8 +5,9 @@ import Table from "./Table";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import EditModal from "./EditModal";
+import ModalResponse from "./ModalResponse";
+import DeleteModalConfirm from "./DeleteModalConfirm";
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 axios.defaults.baseURL = `http://${ipAddress}`;
 
 const InformationTable = () => {
@@ -17,11 +18,20 @@ const InformationTable = () => {
     setCurrentPage,
     editIngredientId,
     setEditIngredientId,
-    showEditMessage,
-    setShowEditMessage,
+    responseSuccesfull,
+    setResponseSuccesfull,
+    showResponse,
+    setShowResponse,
+    responseError,
+    setResponseError,
+    deleteIngredientId,
+    setDeleteIngredientId,
+    action
   } = useBetween(useShareableState);
 
+  
   const [loading, setLoading] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [error, setError] = useState(false);
 
@@ -30,6 +40,10 @@ const InformationTable = () => {
   const [lastPage, setLastPage] = useState(-1);
 
   const [selectedIngredient, setSelectedIngredient] = useState({});
+
+  const [showEditMessage, setShowEditMessage] = useState(false);
+  const [showDeleteIngredient,setShowDeleteIngredient] = useState(false);
+  
 
   const previousButton = () => {
     if (currentPage > 1) {
@@ -74,6 +88,7 @@ const InformationTable = () => {
         .then((resp) => {
           if (resp.status === 200) {
             setError(false);
+            
             if (currentPage !== -1) {
               setIngredients(resp.data);
             } else {
@@ -84,11 +99,12 @@ const InformationTable = () => {
           }
         })
         .catch(function (error) {
+            console.log(error);
           setError(true);
         });
       setLoading(false);
     })();
-  }, [currentPage, inputText]);
+  }, [currentPage, inputText,refresh]);
 
   useEffect(() => {
     if (editIngredientId !== -1) {
@@ -96,6 +112,12 @@ const InformationTable = () => {
       setShowEditMessage(true);
     }
   }, [editIngredientId]);
+
+  useEffect(() => {
+    if (deleteIngredientId !== -1) {
+        setShowDeleteIngredient(true);
+    }
+  }, [deleteIngredientId]);
 
   if (loading === true) {
     return (
@@ -220,8 +242,31 @@ const InformationTable = () => {
           setEditIngredientId={setEditIngredientId}
           ingredient={selectedIngredient}
           setIngredient={setSelectedIngredient}
+          setRefresh={setRefresh}
+          refresh={refresh}
         />
       )}
+        <ModalResponse
+        showSuccessfull={responseSuccesfull}
+        showFailed={responseError}
+        setShowFailed={setResponseError}
+        setShowSuccessfull={setResponseSuccesfull}
+        show={showResponse}
+        setShow={setShowResponse}
+        action={action}
+      />
+
+        {showDeleteIngredient && (
+        <DeleteModalConfirm
+            deleteIngredientId={ingredients[deleteIngredientId].Id}
+            setDeleteIngredientId={setDeleteIngredientId}
+            show={showDeleteIngredient}
+            setShow={setShowDeleteIngredient}
+            setRefresh={setRefresh}
+            refresh={refresh}
+      />
+      )}
+      
     </div>
   );
 };

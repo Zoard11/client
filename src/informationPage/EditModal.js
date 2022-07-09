@@ -2,7 +2,12 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
-import moment from "moment";
+import { useBetween } from "use-between";
+import { useShareableState } from "./UseBetween";
+import axios from "axios";
+import { ipAddress } from "../constants";
+
+axios.defaults.baseURL = `http://${ipAddress}`;
 
 function EditModal(props) {
   const handleClose = () => {
@@ -35,9 +40,6 @@ function EditModal(props) {
   const [inputTextFunction, setInputTextFunction] = useState(
     props.ingredient["Function"]
   );
-  const [inputTextUpdateDate, setInputTextUpdateDate] = useState(
-    moment.utc(new Date(props.ingredient["Update Date"])).format("YYYY-MM-DD")
-  );
 
   const inputHandlerCosingRefNo = (e) => {
     setInputTextCosingRefNo(e);
@@ -66,8 +68,54 @@ function EditModal(props) {
   const inputHandlerFunction = (e) => {
     setInputTextFunction(e);
   };
-  const inputHandlerUpdateDate = (e) => {
-    setInputTextUpdateDate(e);
+
+
+  const {
+    updateSuccesfull,
+    setResponseSuccesfull,
+    showResponse,
+    setShowResponse,
+    responseError,
+    setResponseError,
+    action,
+    setAction
+  } = useBetween(useShareableState);
+
+  const editIngredient = async() => {
+   
+    await axios.put(`/api/update/${props.ingredient.Id}`, {
+          data: {
+            inputTextCosingRefNo: inputTextCosingRefNo,
+            inputTextInciName: inputTextInciName,
+            inputTextInnName: inputTextInnName,
+            inputTextPhEurName: inputTextPhEurName,
+            inputTextCasNo: inputTextCasNo,
+            inputTextEcNo: inputTextEcNo,
+            inputTextDescription: inputTextDescription,
+            inputTextRestriction: inputTextRestriction,
+            inputTextFunction: inputTextFunction,
+          },
+        })
+        .then((resp) => {
+            setAction('edit');
+          if (resp.status === 204) {
+            setResponseSuccesfull(true);
+            setShowResponse(true);
+            setResponseError(false);
+            props.setShow(false);
+            props.setEditIngredientId(-1);
+            props.setRefresh(!props.refresh);
+          }
+        })
+        .catch(function (error) {
+            setAction('edit');
+            setResponseSuccesfull(false);
+            setShowResponse(true);
+            setResponseError(true);
+            props.setShow(false);
+            props.setEditIngredientId(-1);
+        });
+
   };
 
   return (
@@ -215,28 +263,13 @@ function EditModal(props) {
                   />
                 </div>
               </div>
-
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Update Date</label>
-                <div className="col-sm-10">
-                  <input
-                    className="form-control"
-                    id="focusedInput"
-                    type="date"
-                    value={inputTextUpdateDate}
-                    onChange={(event) => {
-                      inputHandlerUpdateDate(event.target.value);
-                    }}
-                  />
-                </div>
-              </div>
             </div>
           ) : (
             <b>Loading...</b>
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={props.deleteById}>
+          <Button variant="primary" onClick={editIngredient}>
             Edit
           </Button>
           <Button variant="primary" onClick={handleClose}>

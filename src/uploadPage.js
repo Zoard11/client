@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { ipAddress } from "./constants";
 import UploadModal from "./UploadModal";
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 axios.defaults.baseURL = `http://${ipAddress}`;
 
 const UploadPage = () => {
@@ -25,9 +24,7 @@ const UploadPage = () => {
       const formData = new FormData();
 
       formData.append("file", selectedFile, selectedFile.name);
-      // console.log(selectedFile);
 
-      // console.log(axios.defaults.baseURL);
       axios
         .post("/api/uploadfile", formData, {
           headers: {
@@ -44,8 +41,6 @@ const UploadPage = () => {
         })
         .catch(function (error) {
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
@@ -53,15 +48,11 @@ const UploadPage = () => {
             setShowSuccessfullUploadMessage(false);
             setShowMessage(true);
           } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
             console.log(error.request);
             setShowFailedUploadMessage(true);
             setShowSuccessfullUploadMessage(false);
             setShowMessage(true);
           } else {
-            // Something happened in setting up the request that triggered an Error
             console.log("Error", error.message);
             setShowFailedUploadMessage(true);
             setShowSuccessfullUploadMessage(false);
