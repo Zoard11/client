@@ -7,6 +7,7 @@ import { useShareableState } from "./UseBetween";
 import EditModal from "./EditModal";
 import ModalResponse from "./ModalResponse";
 import DeleteModalConfirm from "./DeleteModalConfirm";
+import AddNewModal from "./AddNewModal";
 
 axios.defaults.baseURL = `http://${ipAddress}`;
 
@@ -26,10 +27,11 @@ const InformationTable = () => {
     setResponseError,
     deleteIngredientId,
     setDeleteIngredientId,
-    action
+    action,
+    showAddNew,
+    setShowAddNew,
   } = useBetween(useShareableState);
 
-  
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -42,8 +44,8 @@ const InformationTable = () => {
   const [selectedIngredient, setSelectedIngredient] = useState({});
 
   const [showEditMessage, setShowEditMessage] = useState(false);
-  const [showDeleteIngredient,setShowDeleteIngredient] = useState(false);
-  
+  const [showDeleteIngredient, setShowDeleteIngredient] = useState(false);
+  const [lastPageReached, setLastPageReached] = useState(false);
 
   const previousButton = () => {
     if (currentPage > 1) {
@@ -88,10 +90,18 @@ const InformationTable = () => {
         .then((resp) => {
           if (resp.status === 200) {
             setError(false);
-            
+
             if (currentPage !== -1) {
-              setIngredients(resp.data);
+              if (resp.data.length !== 0) {
+                setLastPageReached(false);
+                setIngredients(resp.data);
+              } else {
+                if (ingredients.length !== 0) {
+                  setLastPageReached(true);
+                }
+              }
             } else {
+              setLastPageReached(false);
               setCurrentPage(resp.data.currentPage);
               setIngredients(resp.data.result);
               setLastPage(resp.data.currentPage);
@@ -99,12 +109,12 @@ const InformationTable = () => {
           }
         })
         .catch(function (error) {
-            console.log(error);
+          console.log(error);
           setError(true);
         });
       setLoading(false);
     })();
-  }, [currentPage, inputText,refresh]);
+  }, [currentPage, inputText, refresh]);
 
   useEffect(() => {
     if (editIngredientId !== -1) {
@@ -115,7 +125,7 @@ const InformationTable = () => {
 
   useEffect(() => {
     if (deleteIngredientId !== -1) {
-        setShowDeleteIngredient(true);
+      setShowDeleteIngredient(true);
     }
   }, [deleteIngredientId]);
 
@@ -141,6 +151,59 @@ const InformationTable = () => {
       <div>
         <h1>Ingredients</h1>
         <b>There is no results.</b>
+      </div>
+    );
+  }
+
+  if (lastPageReached) {
+    return (
+      <div>
+        <h1>Ingredients</h1>
+        <b>There is no more ingredient.</b>
+        <ul className="pagination justify-content-center">
+          <li className="page-item">
+            <button className="page-link" onClick={firstButton}>
+              First
+            </button>
+          </li>
+
+          {currentPage > 1 && (
+            <li className="page-item ">
+              <button className="page-link" onClick={previousButton}>
+                Previous
+              </button>
+            </li>
+          )}
+          {currentPage > 3 && (
+            <li className="page-item ">
+              <button className="page-link">...</button>
+            </li>
+          )}
+          {currentPage > 2 && (
+            <li className="page-item ">
+              <button
+                className="page-link"
+                onClick={() => changePageButton(currentPage - 2)}
+              >
+                {currentPage - 2}
+              </button>
+            </li>
+          )}
+          {currentPage > 1 && (
+            <li className="page-item ">
+              <button
+                className="page-link"
+                onClick={() => changePageButton(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            </li>
+          )}
+
+          <li className="page-item active ">
+            <button className="page-link">{currentPage}</button>
+          </li>
+        </ul>
       </div>
     );
   }
@@ -205,7 +268,7 @@ const InformationTable = () => {
             </button>
           </li>
         )}
-        {currentPage + 1 < lastPage && lastPage !== -1 && (
+        {(currentPage + 1 < lastPage || lastPage === -1) && (
           <li className="page-item ">
             <button
               className="page-link"
@@ -215,7 +278,7 @@ const InformationTable = () => {
             </button>
           </li>
         )}
-        {currentPage + 2 < lastPage && lastPage !== -1 && (
+        {(currentPage + 2 < lastPage || lastPage === -1) && (
           <li className="page-item ">
             <button className="page-link">...</button>
           </li>
@@ -235,6 +298,15 @@ const InformationTable = () => {
         </li>
       </ul>
 
+      {showAddNew && (
+        <AddNewModal
+          show={showAddNew}
+          setShow={setShowAddNew}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
+
       {showEditMessage && (
         <EditModal
           show={showEditMessage}
@@ -246,7 +318,7 @@ const InformationTable = () => {
           refresh={refresh}
         />
       )}
-        <ModalResponse
+      <ModalResponse
         showSuccessfull={responseSuccesfull}
         showFailed={responseError}
         setShowFailed={setResponseError}
@@ -256,17 +328,16 @@ const InformationTable = () => {
         action={action}
       />
 
-        {showDeleteIngredient && (
+      {showDeleteIngredient && (
         <DeleteModalConfirm
-            deleteIngredientId={ingredients[deleteIngredientId].Id}
-            setDeleteIngredientId={setDeleteIngredientId}
-            show={showDeleteIngredient}
-            setShow={setShowDeleteIngredient}
-            setRefresh={setRefresh}
-            refresh={refresh}
-      />
+          deleteIngredientId={ingredients[deleteIngredientId].Id}
+          setDeleteIngredientId={setDeleteIngredientId}
+          show={showDeleteIngredient}
+          setShow={setShowDeleteIngredient}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
       )}
-      
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 
 const InformationSearch = () => {
-  const { inputText, setInputText, setCurrentPage } =
+  const { inputText, setInputText, setCurrentPage, setShowAddNew } =
     useBetween(useShareableState);
 
   let inputHandler = (e) => {
@@ -23,6 +23,10 @@ const InformationSearch = () => {
           inputHandler(event.target.value);
         }}
       />
+      <button className="btn-lg " onClick={() => setShowAddNew(true)}>
+        <i className="bi bi-plus-square-fill fa-10x"></i>
+        Add new ingredient
+      </button>
     </div>
   );
 };

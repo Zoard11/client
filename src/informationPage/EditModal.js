@@ -69,53 +69,50 @@ function EditModal(props) {
     setInputTextFunction(e);
   };
 
-
   const {
-    updateSuccesfull,
     setResponseSuccesfull,
     showResponse,
     setShowResponse,
     responseError,
     setResponseError,
     action,
-    setAction
+    setAction,
   } = useBetween(useShareableState);
 
-  const editIngredient = async() => {
-   
-    await axios.put(`/api/update/${props.ingredient.Id}`, {
-          data: {
-            inputTextCosingRefNo: inputTextCosingRefNo,
-            inputTextInciName: inputTextInciName,
-            inputTextInnName: inputTextInnName,
-            inputTextPhEurName: inputTextPhEurName,
-            inputTextCasNo: inputTextCasNo,
-            inputTextEcNo: inputTextEcNo,
-            inputTextDescription: inputTextDescription,
-            inputTextRestriction: inputTextRestriction,
-            inputTextFunction: inputTextFunction,
-          },
-        })
-        .then((resp) => {
-            setAction('edit');
-          if (resp.status === 204) {
-            setResponseSuccesfull(true);
-            setShowResponse(true);
-            setResponseError(false);
-            props.setShow(false);
-            props.setEditIngredientId(-1);
-            props.setRefresh(!props.refresh);
-          }
-        })
-        .catch(function (error) {
-            setAction('edit');
-            setResponseSuccesfull(false);
-            setShowResponse(true);
-            setResponseError(true);
-            props.setShow(false);
-            props.setEditIngredientId(-1);
-        });
-
+  const editIngredient = async () => {
+    await axios
+      .put(`/api/update/${props.ingredient.Id}`, {
+        data: {
+          inputTextCosingRefNo: inputTextCosingRefNo,
+          inputTextInciName: inputTextInciName,
+          inputTextInnName: inputTextInnName,
+          inputTextPhEurName: inputTextPhEurName,
+          inputTextCasNo: inputTextCasNo,
+          inputTextEcNo: inputTextEcNo,
+          inputTextDescription: inputTextDescription,
+          inputTextRestriction: inputTextRestriction,
+          inputTextFunction: inputTextFunction,
+        },
+      })
+      .then((resp) => {
+        setAction("edit");
+        if (resp.status === 204) {
+          setResponseSuccesfull(true);
+          setShowResponse(true);
+          setResponseError(false);
+          props.setShow(false);
+          props.setEditIngredientId(-1);
+          props.setRefresh(!props.refresh);
+        }
+      })
+      .catch(function (error) {
+        setAction("edit");
+        setResponseSuccesfull(false);
+        setShowResponse(true);
+        setResponseError(true);
+        props.setShow(false);
+        props.setEditIngredientId(-1);
+      });
   };
 
   return (

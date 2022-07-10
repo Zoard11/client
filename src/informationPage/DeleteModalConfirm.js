@@ -6,28 +6,27 @@ import { useShareableState } from "./UseBetween";
 import axios from "axios";
 
 function DeleteModalConfirm(props) {
-
-    const {
-        updateSuccesfull,
-        setResponseSuccesfull,
-        showResponse,
-        setShowResponse,
-        responseError,
-        setResponseError,
-        action,
-        setAction
-    } = useBetween(useShareableState);
+  const {
+    updateSuccesfull,
+    setResponseSuccesfull,
+    showResponse,
+    setShowResponse,
+    responseError,
+    setResponseError,
+    action,
+    setAction,
+  } = useBetween(useShareableState);
 
   const handleClose = () => {
     props.setShow(false);
     props.setDeleteIngredientId(-1);
   };
 
-  const deleteIngredient = async() => {
-
-    await axios.delete(`/api/delete/${props.deleteIngredientId}`)
+  const deleteIngredient = async () => {
+    await axios
+      .delete(`/api/delete/${props.deleteIngredientId}`)
       .then((resp) => {
-        setAction('delete');
+        setAction("delete");
         if (resp.status === 204) {
           setResponseSuccesfull(true);
           setShowResponse(true);
@@ -38,11 +37,11 @@ function DeleteModalConfirm(props) {
       })
       .catch(function (error) {
         console.log(error);
-        setAction('delete');
+        setAction("delete");
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);
-          props.setShow(false);
+        props.setShow(false);
       });
     props.setShow(false);
     props.setDeleteIngredientId(-1);
@@ -54,9 +53,7 @@ function DeleteModalConfirm(props) {
         <Modal.Header closeButton>
           <Modal.Title>Confirm delete</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete the ingredient?
-        </Modal.Body>
+        <Modal.Body>Are you sure you want to delete the ingredient?</Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={deleteIngredient}>
             Yes

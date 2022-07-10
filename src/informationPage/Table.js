@@ -64,7 +64,8 @@ function Table(props: Props) {
     data,
   });
 
-  const { setEditIngredientId,setDeleteIngredientId } = useBetween(useShareableState);
+  const { setEditIngredientId, setDeleteIngredientId } =
+    useBetween(useShareableState);
 
   const editButton = (id) => {
     setEditIngredientId(id);
@@ -79,7 +80,6 @@ function Table(props: Props) {
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} scope="col">
                 {column.render("Header")}
@@ -95,15 +95,23 @@ function Table(props: Props) {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-
               {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
               <td>
-              <button className="btn btn-default" onClick={() => editButton(row.id)}><i className="bi bi-pencil-square"></i>Edit</button>
-                </td>
-              <td><button className="delete" onClick={() => deleteButton(row.id)}><i className="bi bi-trash3-fill"></i>Delete</button></td>
-            </tr> 
+                <button
+                  className="btn btn-default"
+                  onClick={() => editButton(row.id)}
+                >
+                  <i className="bi bi-pencil-square"></i>Edit
+                </button>
+              </td>
+              <td>
+                <button className="delete" onClick={() => deleteButton(row.id)}>
+                  <i className="bi bi-trash3-fill"></i>Delete
+                </button>
+              </td>
+            </tr>
           );
         })}
       </tbody>

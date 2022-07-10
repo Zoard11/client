@@ -7,8 +7,9 @@ export const useShareableState = () => {
   const [responseSuccesfull, setResponseSuccesfull] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
   const [responseError, setResponseError] = useState(false);
-  const [deleteIngredientId,setDeleteIngredientId]=useState(-1);
-  const [action,setAction]=useState('');
+  const [deleteIngredientId, setDeleteIngredientId] = useState(-1);
+  const [action, setAction] = useState("");
+  const [showAddNew, setShowAddNew] = useState(false);
 
   return {
     inputText,
@@ -26,6 +27,8 @@ export const useShareableState = () => {
     deleteIngredientId,
     setDeleteIngredientId,
     action,
-    setAction
+    setAction,
+    showAddNew,
+    setShowAddNew,
   };
 };
