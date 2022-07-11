@@ -80,20 +80,20 @@ function EditModal(props) {
   } = useBetween(useShareableState);
 
   const editIngredient = async () => {
-    await axios
-      .put(`/api/update/${props.ingredient.Id}`, {
-        data: {
-          inputTextCosingRefNo: inputTextCosingRefNo,
-          inputTextInciName: inputTextInciName,
-          inputTextInnName: inputTextInnName,
-          inputTextPhEurName: inputTextPhEurName,
-          inputTextCasNo: inputTextCasNo,
-          inputTextEcNo: inputTextEcNo,
-          inputTextDescription: inputTextDescription,
-          inputTextRestriction: inputTextRestriction,
-          inputTextFunction: inputTextFunction,
-        },
-        withCredentials: true,
+    await axios(`/api/update/${props.ingredient.Id}`, {
+      method: "put",
+      data: {
+        inputTextCosingRefNo: inputTextCosingRefNo,
+        inputTextInciName: inputTextInciName,
+        inputTextInnName: inputTextInnName,
+        inputTextPhEurName: inputTextPhEurName,
+        inputTextCasNo: inputTextCasNo,
+        inputTextEcNo: inputTextEcNo,
+        inputTextDescription: inputTextDescription,
+        inputTextRestriction: inputTextRestriction,
+        inputTextFunction: inputTextFunction,
+      },
+      withCredentials: true
       })
       .then((resp) => {
         setAction("edit");

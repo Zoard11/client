@@ -64,9 +64,9 @@ function AddNewModal(props) {
   } = useBetween(useShareableState);
 
   const addNewIngredient = async () => {
-    await axios
-      .post("/api/ingredient", {
-        data: {
+    await axios("/api/ingredient", {
+      method: "post",
+         data: {
           inputTextCosingRefNo: inputTextCosingRefNo,
           inputTextInciName: inputTextInciName,
           inputTextInnName: inputTextInnName,
@@ -77,7 +77,7 @@ function AddNewModal(props) {
           inputTextRestriction: inputTextRestriction,
           inputTextFunction: inputTextFunction,
         },
-        withCredentials: true,
+      withCredentials: true
       })
       .then((resp) => {
         setAction("adding new item");
