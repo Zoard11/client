@@ -24,7 +24,7 @@ function DeleteModalConfirm(props) {
 
   const deleteIngredient = async () => {
     await axios
-      .delete(`/api/delete/${props.deleteIngredientId}`)
+      .delete(`/api/delete/${props.deleteIngredientId}`, { withCredentials: true })
       .then((resp) => {
         setAction("delete");
         if (resp.status === 204) {

@@ -1,3 +1,13 @@
 .App {
   margin: 10px;
 }
+
+#wrapper {
+  display: flex; 
+}
+
+.item {
+  width: 50%;
+  margin: 5px;
+  padding: 10px;
+}

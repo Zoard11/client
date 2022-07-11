@@ -2,24 +2,28 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import InformationPage from "./informationPage/InformationPage";
 import UploadPage from "./uploadPage";
+import LoginPage from "./LoginPage";
+import UsersPage from "./UsersPage";
 import NavBar from "./navbar";
 import { BrowserRouter, Routes } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App ">
-        <BrowserRouter>
-          <NavBar />
+const App = () => {
 
-          <Routes>
-            <Route exact path="/" element={<InformationPage />} />
-            <Route exact path="/upload" element={<UploadPage />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
-  }
+  return (
+    <div className="App ">
+      <BrowserRouter>
+        <NavBar />
+
+        <Routes>
+          <Route exact path="/" element={<InformationPage />} />
+          <Route exact path="/upload" element={<UploadPage />} />
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/users" element={<UsersPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+
 }
 
 export default App;

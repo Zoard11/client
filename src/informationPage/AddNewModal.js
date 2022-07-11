@@ -77,6 +77,7 @@ function AddNewModal(props) {
           inputTextRestriction: inputTextRestriction,
           inputTextFunction: inputTextFunction,
         },
+        withCredentials: true,
       })
       .then((resp) => {
         setAction("adding new item");

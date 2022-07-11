@@ -30,6 +30,7 @@ const UploadPage = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true,
         })
         .then((resp) => {
           if (resp.status === 204) {

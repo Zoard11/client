@@ -93,6 +93,7 @@ function EditModal(props) {
           inputTextRestriction: inputTextRestriction,
           inputTextFunction: inputTextFunction,
         },
+        withCredentials: true,
       })
       .then((resp) => {
         setAction("edit");

@@ -1,28 +1,64 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import  { useCookies } from 'react-cookie'
 
-class NavBar extends Component {
-  render() {
+const NavBar = () => {
+
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+  const logout =  () => {
+    localStorage.clear();
+    removeCookie('token', { path: '/' })
+    window.location.href = '/';
+  };
+
     return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <b class="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <b className="navbar-brand" href="#">
           Navbar
         </b>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <Link class="nav-link" to="/">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">
               Home
             </Link>
           </li>
-          <li class="nav-item">
-            <Link class="nav-link" to="/upload">
+          {localStorage.getItem('permission') ==='admin' &&
+          <li className="nav-item">
+            <Link className="nav-link" to="/upload">
               Upload
             </Link>
           </li>
+          }
+          {localStorage.getItem('permission') ==='admin' &&
+          <li className="nav-item">
+            <Link className="nav-link" to="/users">
+              Users
+            </Link>
+          </li>
+          }
+          
+          {!localStorage.getItem('token') &&
+            <li className="nav-item">
+            <Link className="nav-link" to="/login">
+              Login/Register
+            </Link>
+          </li>
+          }
+
+
         </ul>
+        {localStorage.getItem('username') &&
+          <span className="float-right">
+            {localStorage.username}
+          </span>
+          }
+
+        {localStorage.getItem('token') &&
+          <button className="nav-item mr-3 nav-link p-3" onClick={logout}>Logout</button>
+          }
       </nav>
     );
-  }
+
 }
 
 export default NavBar;

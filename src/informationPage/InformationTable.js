@@ -86,6 +86,7 @@ const InformationTable = () => {
             indexOfFirstResult: indexOfFirstResult,
             search: inputText,
           },
+          withCredentials: true,
         })
         .then((resp) => {
           if (resp.status === 200) {
