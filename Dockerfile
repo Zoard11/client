@@ -2,7 +2,7 @@
 FROM node:14.16.0
 
 
-WORKDIR /usr/src/server
+WORKDIR /usr/src/client
 
 
 COPY package.json .
