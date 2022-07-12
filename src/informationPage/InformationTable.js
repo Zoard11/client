@@ -152,6 +152,14 @@ const InformationTable = () => {
       <div>
         <h1>Ingredients</h1>
         <b>There is no results.</b>
+        {showAddNew && (
+        <AddNewModal
+          show={showAddNew}
+          setShow={setShowAddNew}
+          setRefresh={setRefresh}
+          refresh={refresh}
+        />
+      )}
       </div>
     );
   }
