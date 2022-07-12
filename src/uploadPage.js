@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ipAddress } from "./constants";
 import UploadModal from "./UploadModal";
 
-axios.defaults.baseURL = `http://${ipAddress}`;
+axios.defaults.baseURL = ipAddress;
 
 const UploadPage = () => {
   const [selectedFile, setSelectedFile] = useState({});

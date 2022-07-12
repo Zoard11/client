@@ -4,7 +4,7 @@ import { ipAddress } from "./constants";
 import UploadModal from "./UploadModal";
 import  { useCookies } from 'react-cookie';
 
-axios.defaults.baseURL = `http://${ipAddress}`;
+axios.defaults.baseURL = ipAddress;
 
 const LoginPage = () => {
 

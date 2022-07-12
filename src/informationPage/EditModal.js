@@ -7,7 +7,7 @@ import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
 
-axios.defaults.baseURL = `http://${ipAddress}`;
+axios.defaults.baseURL = ipAddress;
 
 function EditModal(props) {
   const handleClose = () => {

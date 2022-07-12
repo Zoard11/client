@@ -5,7 +5,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./informationPage/UseBetween";
 import ModalResponse from "./informationPage/ModalResponse";
 
-axios.defaults.baseURL = `http://${ipAddress}`;
+axios.defaults.baseURL = ipAddress;
 
 const UsersPage = () => {
 

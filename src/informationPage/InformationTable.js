@@ -9,7 +9,7 @@ import ModalResponse from "./ModalResponse";
 import DeleteModalConfirm from "./DeleteModalConfirm";
 import AddNewModal from "./AddNewModal";
 
-axios.defaults.baseURL = `http://${ipAddress}`;
+axios.defaults.baseURL = ipAddress;
 
 const InformationTable = () => {
   const [ingredients, setIngredients] = useState([]);
