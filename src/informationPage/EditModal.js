@@ -6,6 +6,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
+import  { useCookies } from 'react-cookie';
 
 axios.defaults.baseURL = ipAddress;
 
@@ -15,6 +16,7 @@ function EditModal(props) {
     props.setEditIngredientId(-1);
   };
 
+  const [cookies, setCookie] = useCookies(['token']);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState(
     props.ingredient["COSING Ref No"]
   );
@@ -93,7 +95,10 @@ function EditModal(props) {
         inputTextRestriction: inputTextRestriction,
         inputTextFunction: inputTextFunction,
       },
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        'Authorization': cookies.token,
+      },
       })
       .then((resp) => {
         setAction("edit");

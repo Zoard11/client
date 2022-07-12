@@ -71,7 +71,6 @@ const InformationTable = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      // const result = await axios.get('/api/topTen');
       let indexOfFirstResult;
       if (currentPage !== -1) {
         indexOfFirstResult = (currentPage - 1) * dataPerPage;

@@ -4,11 +4,13 @@ import { ipAddress } from "./constants";
 import { useBetween } from "use-between";
 import { useShareableState } from "./informationPage/UseBetween";
 import ModalResponse from "./informationPage/ModalResponse";
+import  { useCookies } from 'react-cookie';
 
 axios.defaults.baseURL = ipAddress;
 
 const UsersPage = () => {
 
+    const [cookies, setCookie] = useCookies(['token']);
     const {
         responseSuccesfull,
         setResponseSuccesfull,
@@ -30,7 +32,12 @@ const UsersPage = () => {
           setLoading(true);
 
           await axios
-            .get("/api/users", {withCredentials: true})
+            .get("/api/users", {
+                withCredentials: true,
+                headers: {
+                    'Authorization': cookies.token,
+                  }
+            })
             .then((resp) => {
               if (resp.status === 200) {
                 setError(false);
@@ -48,7 +55,12 @@ const UsersPage = () => {
       const deleteUser = async (username) => {
         console.log('delete');
         await axios
-          .delete(`/api/users/${username}`, {withCredentials: true})
+          .delete(`/api/users/${username}`, {
+            withCredentials: true,
+            headers: {
+                'Authorization': cookies.token,
+              }
+        })
           .then((resp) => {
             setAction("delete user");
             if (resp.status === 204) {
@@ -73,7 +85,10 @@ const UsersPage = () => {
             data: {
                 newRole:'admin',
               },
-            withCredentials: true
+            withCredentials: true,
+            headers: {
+                'Authorization': cookies.token,
+              },
             })
           .then((resp) => {
             setAction("promote user");
@@ -98,7 +113,10 @@ const UsersPage = () => {
             data: {
                 newRole:'user',
               },
-            withCredentials: true
+            withCredentials: true,
+            headers: {
+                'Authorization': cookies.token,
+              },
             })
           .then((resp) => {
             setAction("demote user");

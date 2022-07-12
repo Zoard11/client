@@ -6,6 +6,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
+import  { useCookies } from 'react-cookie';
 
 axios.defaults.baseURL = ipAddress;
 
@@ -14,6 +15,7 @@ function AddNewModal(props) {
     props.setShow(false);
   };
 
+  const [cookies, setCookie] = useCookies(['token']);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState("");
   const [inputTextInciName, setInputTextInciName] = useState("");
   const [inputTextInnName, setInputTextInnName] = useState("");
@@ -77,7 +79,10 @@ function AddNewModal(props) {
           inputTextRestriction: inputTextRestriction,
           inputTextFunction: inputTextFunction,
         },
-      withCredentials: true
+      withCredentials: true,
+      headers: {
+        'Authorization': cookies.token,
+      }
       })
       .then((resp) => {
         setAction("adding new item");

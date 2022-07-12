@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
+import  { useCookies } from 'react-cookie';
 
 function DeleteModalConfirm(props) {
   const {
@@ -22,9 +23,16 @@ function DeleteModalConfirm(props) {
     props.setDeleteIngredientId(-1);
   };
 
+  const [cookies, setCookie] = useCookies(['token']);
+
   const deleteIngredient = async () => {
     await axios
-      .delete(`/api/delete/${props.deleteIngredientId}`, { withCredentials: true })
+      .delete(`/api/delete/${props.deleteIngredientId}`, { 
+        withCredentials: true ,
+        headers: {
+          'Authorization': cookies.token,
+        },
+      })
       .then((resp) => {
         setAction("delete");
         if (resp.status === 204) {
