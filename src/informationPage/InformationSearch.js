@@ -24,13 +24,12 @@ const InformationSearch = () => {
         }}
       />
 
-  {localStorage.getItem('permission') ==='admin' &&
-                 <button className="btn-lg " onClick={() => setShowAddNew(true)}>
-                 <i className="bi bi-plus-square-fill fa-10x"></i>
-                 Add new ingredient
-               </button>
-          }
- 
+      {localStorage.getItem("permission") === "admin" && (
+        <button className="btn-lg " onClick={() => setShowAddNew(true)}>
+          <i className="bi bi-plus-square-fill fa-10x"></i>
+          Add new ingredient
+        </button>
+      )}
     </div>
   );
 };

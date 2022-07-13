@@ -6,7 +6,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
-import  { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 axios.defaults.baseURL = ipAddress;
 
@@ -15,7 +15,7 @@ function AddNewModal(props) {
     props.setShow(false);
   };
 
-  const [cookies, setCookie] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(["token"]);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState("");
   const [inputTextInciName, setInputTextInciName] = useState("");
   const [inputTextInnName, setInputTextInnName] = useState("");
@@ -68,22 +68,22 @@ function AddNewModal(props) {
   const addNewIngredient = async () => {
     await axios("/api/ingredient", {
       method: "post",
-         data: {
-          inputTextCosingRefNo: inputTextCosingRefNo,
-          inputTextInciName: inputTextInciName,
-          inputTextInnName: inputTextInnName,
-          inputTextPhEurName: inputTextPhEurName,
-          inputTextCasNo: inputTextCasNo,
-          inputTextEcNo: inputTextEcNo,
-          inputTextDescription: inputTextDescription,
-          inputTextRestriction: inputTextRestriction,
-          inputTextFunction: inputTextFunction,
-        },
+      data: {
+        inputTextCosingRefNo: inputTextCosingRefNo,
+        inputTextInciName: inputTextInciName,
+        inputTextInnName: inputTextInnName,
+        inputTextPhEurName: inputTextPhEurName,
+        inputTextCasNo: inputTextCasNo,
+        inputTextEcNo: inputTextEcNo,
+        inputTextDescription: inputTextDescription,
+        inputTextRestriction: inputTextRestriction,
+        inputTextFunction: inputTextFunction,
+      },
       withCredentials: true,
       headers: {
-        'Authorization': cookies.token,
-      }
-      })
+        Authorization: cookies.token,
+      },
+    })
       .then((resp) => {
         setAction("adding new item");
         if (resp.status === 204) {

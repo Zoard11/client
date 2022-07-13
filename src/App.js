@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import InformationPage from "./informationPage/InformationPage";
-import UploadPage from "./uploadPage";
-import LoginPage from "./LoginPage";
-import UsersPage from "./UsersPage";
+import UploadPage from "./uploadPage/uploadPage";
+import LoginPage from "./loginPage/LoginPage";
+import UsersPage from "./usersPage/UsersPage";
 import NavBar from "./navbar";
 import { BrowserRouter, Routes } from "react-router-dom";
 
 const App = () => {
-
   return (
     <div className="App ">
       <BrowserRouter>
@@ -23,7 +22,6 @@ const App = () => {
       </BrowserRouter>
     </div>
   );
-
-}
+};
 
 export default App;

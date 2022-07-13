@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { ipAddress } from "./constants";
+import { ipAddress } from "../constants";
 import UploadModal from "./UploadModal";
-import  { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 axios.defaults.baseURL = ipAddress;
 
 const UploadPage = () => {
-  const [cookies, setCookie] = useCookies(['token']);
+  const [cookies, setCookie] = useCookies(["token"]);
   const [selectedFile, setSelectedFile] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [file, setFile] = useState({});
@@ -31,7 +31,7 @@ const UploadPage = () => {
         .post("/api/uploadfile", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            'Authorization': cookies.token,
+            Authorization: cookies.token,
           },
           withCredentials: true,
         })
