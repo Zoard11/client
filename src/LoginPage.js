@@ -3,10 +3,16 @@ import React, { useState } from "react";
 import { ipAddress } from "./constants";
 import UploadModal from "./UploadModal";
 import  { useCookies } from 'react-cookie';
+import LoginErrorModal from "./LoginErrorModal";
 
 axios.defaults.baseURL = ipAddress;
 
 const LoginPage = () => {
+
+  
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState('');
+  const [action, setAction] = useState('');
 
   const [cookies, setCookie] = useCookies(['token']);
 
@@ -53,13 +59,15 @@ const LoginPage = () => {
           localStorage.setItem("username", username);
           setCookie('token', token, { path: '/' });
           window.location.href = '/';
-        } else{
-          console.log(resp);
         }
       })
       .catch(function (error) {
 
-        console.log(error);
+        setAction("Login");
+        setMessage(error.response.data);
+        setShow(true);
+        setInputTextPassword('');
+        
 
       });
   };
@@ -83,13 +91,15 @@ const LoginPage = () => {
           localStorage.setItem("username", username);
           setCookie('token', token, { path: '/' });
           window.location.href = '/';
-        } else{
-          console.log(resp);
         }
       })
       .catch(function (error) {
 
-        console.log(error);
+        setAction("Register");
+        setMessage(error.response.data);
+        setShow(true);
+        setInputTextPasswordRegister('');
+        setInputTextPasswordRegisterRepeat('');
 
       });
   };
@@ -157,6 +167,15 @@ const LoginPage = () => {
             <button type="button" className="btn btn-primary btn-block mb-4" onClick={register}>Register</button>
 
         </div>
+        
+        {show && 
+        <LoginErrorModal
+            show={show}
+            setShow={setShow}
+            action={action}
+            message={message}
+        />
+        }
 
           </div>
         </React.Fragment>
