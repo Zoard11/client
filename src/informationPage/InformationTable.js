@@ -37,7 +37,7 @@ const InformationTable = () => {
 
   const [error, setError] = useState(false);
 
-  const [dataPerPage, setDataPerPage] = useState(10);
+  const [dataPerPage] = useState(10);
 
   const [lastPage, setLastPage] = useState(-1);
 

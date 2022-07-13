@@ -11,6 +11,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState("");
   const [action, setAction] = useState("");
 
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie] = useCookies(["token"]);
 
   const [inputTextUsername, setInputTextUsername] = useState("");

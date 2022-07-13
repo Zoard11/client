@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 axios.defaults.baseURL = ipAddress;
 
 const UsersPage = () => {
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const {
     responseSuccesfull,
     setResponseSuccesfull,
@@ -69,7 +69,7 @@ const UsersPage = () => {
           setResponseError(false);
         }
       })
-      .catch(function (error) {
+      .catch(function () {
         setAction("delete user");
         setResponseSuccesfull(false);
         setShowResponse(true);
@@ -97,7 +97,7 @@ const UsersPage = () => {
           setResponseError(false);
         }
       })
-      .catch(function (error) {
+      .catch(function () {
         setAction("promote user");
         setResponseSuccesfull(false);
         setShowResponse(true);
@@ -125,7 +125,7 @@ const UsersPage = () => {
           setResponseError(false);
         }
       })
-      .catch(function (error) {
+      .catch(function () {
         setAction("demote user");
         setResponseSuccesfull(false);
         setShowResponse(true);

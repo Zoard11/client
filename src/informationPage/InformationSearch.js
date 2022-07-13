@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 
 const InformationSearch = () => {
-  const { inputText, setInputText, setCurrentPage, setShowAddNew } =
+  const { setInputText, setCurrentPage, setShowAddNew } =
     useBetween(useShareableState);
 
   let inputHandler = (e) => {

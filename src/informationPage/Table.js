@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
-import { InterfaceInci } from "./Types";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import moment from "moment";
+import PropTypes from 'prop-types';
 
-type Props = {
-  data: InterfaceInci[],
+Table.propTypes = {
+  data: PropTypes.array,
 };
 
 const columns = [
@@ -57,7 +57,7 @@ const columns = [
   },
 ];
 
-function Table(props: Props) {
+function Table(props) {
   const data = useMemo(() => props.data, [props.data]);
   const { getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
@@ -78,25 +78,32 @@ function Table(props: Props) {
   return (
     <table className="table table-striped table-sm">
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} scope="col">
-                {column.render("Header")}
-              </th>
-            ))}
-            <th></th>
-            <th></th>
-          </tr>
-        ))}
+            {headerGroups.map((headerGroup) => {
+  const { key, ...restHeaderProps } = headerGroup.getHeaderGroupProps();
+
+  return (
+    <tr key={key} {...restHeaderProps}>
+      {headerGroup.headers.map((column) => {
+        const { key, ...restColumnProps } = column.getHeaderProps();
+
+        return (
+          <th key={key} {...restColumnProps}>
+            {column.render("Header")}
+          </th>
+        );
+      })}
+    </tr>
+  );
+})}
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} key={row.id}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                const { key, ...restCellProps } = cell.getCellProps();
+                return <td key={key} {...restCellProps} >{cell.render("Cell") }</td>;
               })}
               {localStorage.getItem("permission") === "admin" && (
                 <>

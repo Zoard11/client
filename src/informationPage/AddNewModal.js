@@ -1,21 +1,29 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
 import { useCookies } from "react-cookie";
+import PropTypes from 'prop-types';
 
 axios.defaults.baseURL = ipAddress;
+
+AddNewModal.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  setRefresh: PropTypes.func,
+  refresh: PropTypes.bool,
+};
 
 function AddNewModal(props) {
   const handleClose = () => {
     props.setShow(false);
   };
 
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState("");
   const [inputTextInciName, setInputTextInciName] = useState("");
   const [inputTextInnName, setInputTextInnName] = useState("");
@@ -56,13 +64,9 @@ function AddNewModal(props) {
 
   const {
     setResponseSuccesfull,
-    showResponse,
     setShowResponse,
-    responseError,
     setResponseError,
-    action,
     setAction,
-    setShowAddNew,
   } = useBetween(useShareableState);
 
   const addNewIngredient = async () => {

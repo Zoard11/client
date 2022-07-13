@@ -1,14 +1,24 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
 import { useCookies } from "react-cookie";
+import PropTypes from 'prop-types';
 
 axios.defaults.baseURL = ipAddress;
+
+EditModal.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  setRefresh: PropTypes.func,
+  refresh: PropTypes.bool,
+  ingredient: PropTypes.object,
+  setEditIngredientId: PropTypes.func,
+};
 
 function EditModal(props) {
   const handleClose = () => {
@@ -16,7 +26,7 @@ function EditModal(props) {
     props.setEditIngredientId(-1);
   };
 
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState(
     props.ingredient["COSING Ref No"]
   );
@@ -73,11 +83,8 @@ function EditModal(props) {
 
   const {
     setResponseSuccesfull,
-    showResponse,
     setShowResponse,
-    responseError,
     setResponseError,
-    action,
     setAction,
   } = useBetween(useShareableState);
 
@@ -111,7 +118,7 @@ function EditModal(props) {
           props.setRefresh(!props.refresh);
         }
       })
-      .catch(function (error) {
+      .catch(function () {
         setAction("edit");
         setResponseSuccesfull(false);
         setShowResponse(true);

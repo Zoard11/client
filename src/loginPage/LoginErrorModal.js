@@ -1,6 +1,15 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import PropTypes from 'prop-types';
+
+
+LoginErrorModal.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  action: PropTypes.string,
+  message: PropTypes.string,
+};
 
 function LoginErrorModal(props) {
   const handleClose = () => {

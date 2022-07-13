@@ -5,16 +5,23 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import PropTypes from 'prop-types';
+
+
+DeleteModalConfirm.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  setRefresh: PropTypes.func,
+  refresh: PropTypes.bool,
+  setDeleteIngredientId: PropTypes.func,
+  deleteIngredientId: PropTypes.number,
+};
 
 function DeleteModalConfirm(props) {
   const {
-    updateSuccesfull,
     setResponseSuccesfull,
-    showResponse,
     setShowResponse,
-    responseError,
     setResponseError,
-    action,
     setAction,
   } = useBetween(useShareableState);
 
@@ -23,7 +30,7 @@ function DeleteModalConfirm(props) {
     props.setDeleteIngredientId(-1);
   };
 
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
 
   const deleteIngredient = async () => {
     await axios

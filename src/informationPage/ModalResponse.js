@@ -1,6 +1,18 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import PropTypes from 'prop-types';
+
+
+ModalResponse.propTypes = {
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  setShowSuccessfull: PropTypes.func,
+  showSuccessfull: PropTypes.bool,
+  showFailed: PropTypes.bool,
+  setShowFailed: PropTypes.func,
+  action: PropTypes.string,
+};
 
 function ModalResponse(props) {
   const handleClose = () => {

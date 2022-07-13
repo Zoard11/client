@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 axios.defaults.baseURL = ipAddress;
 
 const UploadPage = () => {
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies] = useCookies(["token"]);
   const [selectedFile, setSelectedFile] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [file, setFile] = useState({});

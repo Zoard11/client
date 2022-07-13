@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 const NavBar = () => {
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const logout = () => {
     localStorage.clear();
