@@ -5,8 +5,7 @@ import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { useCookies } from "react-cookie";
-import PropTypes from 'prop-types';
-
+import PropTypes from "prop-types";
 
 DeleteModalConfirm.propTypes = {
   show: PropTypes.bool,

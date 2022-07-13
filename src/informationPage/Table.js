@@ -3,7 +3,7 @@ import { useTable } from "react-table";
 import { useBetween } from "use-between";
 import { useShareableState } from "./UseBetween";
 import moment from "moment";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 Table.propTypes = {
   data: PropTypes.array,
@@ -78,23 +78,23 @@ function Table(props) {
   return (
     <table className="table table-striped table-sm">
       <thead>
-            {headerGroups.map((headerGroup) => {
-  const { key, ...restHeaderProps } = headerGroup.getHeaderGroupProps();
+        {headerGroups.map((headerGroup) => {
+          const { key, ...restHeaderProps } = headerGroup.getHeaderGroupProps();
 
-  return (
-    <tr key={key} {...restHeaderProps}>
-      {headerGroup.headers.map((column) => {
-        const { key, ...restColumnProps } = column.getHeaderProps();
+          return (
+            <tr key={key} {...restHeaderProps}>
+              {headerGroup.headers.map((column) => {
+                const { key, ...restColumnProps } = column.getHeaderProps();
 
-        return (
-          <th key={key} {...restColumnProps}>
-            {column.render("Header")}
-          </th>
-        );
-      })}
-    </tr>
-  );
-})}
+                return (
+                  <th key={key} {...restColumnProps}>
+                    {column.render("Header")}
+                  </th>
+                );
+              })}
+            </tr>
+          );
+        })}
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.map((row) => {
@@ -103,7 +103,11 @@ function Table(props) {
             <tr {...row.getRowProps()} key={row.id}>
               {row.cells.map((cell) => {
                 const { key, ...restCellProps } = cell.getCellProps();
-                return <td key={key} {...restCellProps} >{cell.render("Cell") }</td>;
+                return (
+                  <td key={key} {...restCellProps}>
+                    {cell.render("Cell")}
+                  </td>
+                );
               })}
               {localStorage.getItem("permission") === "admin" && (
                 <>

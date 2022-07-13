@@ -7,7 +7,7 @@ import { useShareableState } from "./UseBetween";
 import axios from "axios";
 import { ipAddress } from "../constants";
 import { useCookies } from "react-cookie";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 axios.defaults.baseURL = ipAddress;
 
