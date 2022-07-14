@@ -1,11 +1,11 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import { useBetween } from "use-between";
-import { useShareableState } from "./UseBetween";
-import axios from "axios";
-import { useCookies } from "react-cookie";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import {useBetween} from 'use-between';
+import {useShareableState} from './UseBetween';
+import axios from 'axios';
+import {useCookies} from 'react-cookie';
+import PropTypes from 'prop-types';
 
 DeleteModalConfirm.propTypes = {
   show: PropTypes.bool,
@@ -17,19 +17,15 @@ DeleteModalConfirm.propTypes = {
 };
 
 function DeleteModalConfirm(props) {
-  const {
-    setResponseSuccesfull,
-    setShowResponse,
-    setResponseError,
-    setAction,
-  } = useBetween(useShareableState);
+  const {setResponseSuccesfull, setShowResponse, setResponseError, setAction} =
+    useBetween(useShareableState);
 
   const handleClose = () => {
     props.setShow(false);
     props.setDeleteIngredientId(-1);
   };
 
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(['token']);
 
   const deleteIngredient = async () => {
     await axios
@@ -39,8 +35,8 @@ function DeleteModalConfirm(props) {
           Authorization: cookies.token,
         },
       })
-      .then((resp) => {
-        setAction("delete");
+      .then(resp => {
+        setAction('delete');
         if (resp.status === 204) {
           setResponseSuccesfull(true);
           setShowResponse(true);
@@ -51,7 +47,7 @@ function DeleteModalConfirm(props) {
       })
       .catch(function (error) {
         console.log(error);
-        setAction("delete");
+        setAction('delete');
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);

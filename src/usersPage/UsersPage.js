@@ -1,15 +1,15 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { ipAddress } from "../constants";
-import { useBetween } from "use-between";
-import { useShareableState } from "../informationPage/UseBetween";
-import ModalResponse from "../informationPage/ModalResponse";
-import { useCookies } from "react-cookie";
+import axios from 'axios';
+import React, {useState, useEffect} from 'react';
+import {ipAddress} from '../constants';
+import {useBetween} from 'use-between';
+import {useShareableState} from '../informationPage/UseBetween';
+import ModalResponse from '../informationPage/ModalResponse';
+import {useCookies} from 'react-cookie';
 
 axios.defaults.baseURL = ipAddress;
 
 const UsersPage = () => {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(['token']);
   const {
     responseSuccesfull,
     setResponseSuccesfull,
@@ -31,13 +31,13 @@ const UsersPage = () => {
       setLoading(true);
 
       await axios
-        .get("/api/users", {
+        .get('/api/users', {
           withCredentials: true,
           headers: {
             Authorization: cookies.token,
           },
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.status === 200) {
             setError(false);
             setUsers(resp.data);
@@ -51,8 +51,8 @@ const UsersPage = () => {
     })();
   }, [reload]);
 
-  const deleteUser = async (username) => {
-    console.log("delete");
+  const deleteUser = async username => {
+    console.log('delete');
     await axios
       .delete(`/api/users/${username}`, {
         withCredentials: true,
@@ -60,8 +60,8 @@ const UsersPage = () => {
           Authorization: cookies.token,
         },
       })
-      .then((resp) => {
-        setAction("delete user");
+      .then(resp => {
+        setAction('delete user');
         if (resp.status === 204) {
           setReload(!reload);
           setResponseSuccesfull(true);
@@ -70,26 +70,26 @@ const UsersPage = () => {
         }
       })
       .catch(function () {
-        setAction("delete user");
+        setAction('delete user');
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);
       });
   };
 
-  const promoteUser = async (username) => {
+  const promoteUser = async username => {
     await axios(`/api/users/${username}`, {
-      method: "patch",
+      method: 'patch',
       data: {
-        newRole: "admin",
+        newRole: 'admin',
       },
       withCredentials: true,
       headers: {
         Authorization: cookies.token,
       },
     })
-      .then((resp) => {
-        setAction("promote user");
+      .then(resp => {
+        setAction('promote user');
         if (resp.status === 204) {
           setReload(!reload);
           setResponseSuccesfull(true);
@@ -98,26 +98,26 @@ const UsersPage = () => {
         }
       })
       .catch(function () {
-        setAction("promote user");
+        setAction('promote user');
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);
       });
   };
 
-  const demoteUser = async (username) => {
+  const demoteUser = async username => {
     await axios(`/api/users/${username}`, {
-      method: "patch",
+      method: 'patch',
       data: {
-        newRole: "user",
+        newRole: 'user',
       },
       withCredentials: true,
       headers: {
         Authorization: cookies.token,
       },
     })
-      .then((resp) => {
-        setAction("demote user");
+      .then(resp => {
+        setAction('demote user');
         if (resp.status === 204) {
           setReload(!reload);
           setResponseSuccesfull(true);
@@ -126,7 +126,7 @@ const UsersPage = () => {
         }
       })
       .catch(function () {
-        setAction("demote user");
+        setAction('demote user');
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);
@@ -154,34 +154,31 @@ const UsersPage = () => {
     <div>
       <h1>Change user roles</h1>
       <div id="container">
-        {users.map((user) => {
-          if (user.Username !== localStorage.getItem("username")) {
+        {users.map(user => {
+          if (user.Username !== localStorage.getItem('username')) {
             return (
               <div className="users" key={user.Username}>
                 <div className="inner" key={user.Username}>
                   <p> Username: {user.Username}</p>
                   <p> User role: {user.UserGroupName} </p>
 
-                  {user.UserGroupName !== "admin" ? (
+                  {user.UserGroupName !== 'admin' ? (
                     <>
                       <button
                         className="btn btn-default"
-                        onClick={() => promoteUser(user.Username)}
-                      >
+                        onClick={() => promoteUser(user.Username)}>
                         <i className="bi bi-arrow-up-square"></i>Give admin role
                       </button>
                       <button
                         className="btn btn-default"
-                        onClick={() => deleteUser(user.Username)}
-                      >
+                        onClick={() => deleteUser(user.Username)}>
                         <i className="bi bi-trash3-fill"></i>Delete user
                       </button>
                     </>
                   ) : (
                     <button
                       className="btn btn-default"
-                      onClick={() => demoteUser(user.Username)}
-                    >
+                      onClick={() => demoteUser(user.Username)}>
                       <i className="bi bi-arrow-down-square"></i>Demote user
                     </button>
                   )}

@@ -1,7 +1,7 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
 UploadModal.propTypes = {
   show: PropTypes.bool,

@@ -1,13 +1,13 @@
-import React from "react";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import { useState } from "react";
-import { useBetween } from "use-between";
-import { useShareableState } from "./UseBetween";
-import axios from "axios";
-import { ipAddress } from "../constants";
-import { useCookies } from "react-cookie";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import {useState} from 'react';
+import {useBetween} from 'use-between';
+import {useShareableState} from './UseBetween';
+import axios from 'axios';
+import {ipAddress} from '../constants';
+import {useCookies} from 'react-cookie';
+import PropTypes from 'prop-types';
 
 axios.defaults.baseURL = ipAddress;
 
@@ -26,71 +26,67 @@ function EditModal(props) {
     props.setEditIngredientId(-1);
   };
 
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(['token']);
   const [inputTextCosingRefNo, setInputTextCosingRefNo] = useState(
-    props.ingredient["COSING Ref No"]
+    props.ingredient['COSING Ref No'],
   );
   const [inputTextInciName, setInputTextInciName] = useState(
-    props.ingredient["INCI name"]
+    props.ingredient['INCI name'],
   );
   const [inputTextInnName, setInputTextInnName] = useState(
-    props.ingredient["INN name"]
+    props.ingredient['INN name'],
   );
   const [inputTextPhEurName, setInputTextPhEurName] = useState(
-    props.ingredient["Ph. Eur. Name"]
+    props.ingredient['Ph. Eur. Name'],
   );
   const [inputTextCasNo, setInputTextCasNo] = useState(
-    props.ingredient["CAS No"]
+    props.ingredient['CAS No'],
   );
-  const [inputTextEcNo, setInputTextEcNo] = useState(props.ingredient["EC No"]);
+  const [inputTextEcNo, setInputTextEcNo] = useState(props.ingredient['EC No']);
   const [inputTextDescription, setInputTextDescription] = useState(
-    props.ingredient["Chem/IUPAC Name / Description"]
+    props.ingredient['Chem/IUPAC Name / Description'],
   );
   const [inputTextRestriction, setInputTextRestriction] = useState(
-    props.ingredient["Restriction"]
+    props.ingredient['Restriction'],
   );
   const [inputTextFunction, setInputTextFunction] = useState(
-    props.ingredient["Function"]
+    props.ingredient['Function'],
   );
 
-  const inputHandlerCosingRefNo = (e) => {
+  const inputHandlerCosingRefNo = e => {
     setInputTextCosingRefNo(e);
   };
-  const inputHandlerInciName = (e) => {
+  const inputHandlerInciName = e => {
     setInputTextInciName(e);
   };
-  const inputHandlerInnName = (e) => {
+  const inputHandlerInnName = e => {
     setInputTextInnName(e);
   };
-  const inputHandlerPhEurName = (e) => {
+  const inputHandlerPhEurName = e => {
     setInputTextPhEurName(e);
   };
-  const inputHandlerCasNo = (e) => {
+  const inputHandlerCasNo = e => {
     setInputTextCasNo(e);
   };
-  const inputHandlerEcNo = (e) => {
+  const inputHandlerEcNo = e => {
     setInputTextEcNo(e);
   };
-  const inputHandlerDescription = (e) => {
+  const inputHandlerDescription = e => {
     setInputTextDescription(e);
   };
-  const inputHandlerRestriction = (e) => {
+  const inputHandlerRestriction = e => {
     setInputTextRestriction(e);
   };
-  const inputHandlerFunction = (e) => {
+  const inputHandlerFunction = e => {
     setInputTextFunction(e);
   };
 
-  const {
-    setResponseSuccesfull,
-    setShowResponse,
-    setResponseError,
-    setAction,
-  } = useBetween(useShareableState);
+  const {setResponseSuccesfull, setShowResponse, setResponseError, setAction} =
+    useBetween(useShareableState);
 
   const editIngredient = async () => {
     await axios(`/api/update/${props.ingredient.Id}`, {
-      method: "put",
+      method: 'put',
       data: {
         inputTextCosingRefNo: inputTextCosingRefNo,
         inputTextInciName: inputTextInciName,
@@ -107,8 +103,8 @@ function EditModal(props) {
         Authorization: cookies.token,
       },
     })
-      .then((resp) => {
-        setAction("edit");
+      .then(resp => {
+        setAction('edit');
         if (resp.status === 204) {
           setResponseSuccesfull(true);
           setShowResponse(true);
@@ -119,7 +115,7 @@ function EditModal(props) {
         }
       })
       .catch(function () {
-        setAction("edit");
+        setAction('edit');
         setResponseSuccesfull(false);
         setShowResponse(true);
         setResponseError(true);
@@ -145,7 +141,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="number"
                     value={inputTextCosingRefNo}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerCosingRefNo(event.target.value);
                     }}
                   />
@@ -160,7 +156,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextInciName}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerInciName(event.target.value);
                     }}
                   />
@@ -175,7 +171,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextInnName}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerInnName(event.target.value);
                     }}
                   />
@@ -190,7 +186,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextPhEurName}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerPhEurName(event.target.value);
                     }}
                   />
@@ -205,7 +201,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextCasNo}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerCasNo(event.target.value);
                     }}
                   />
@@ -220,7 +216,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextEcNo}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerEcNo(event.target.value);
                     }}
                   />
@@ -237,7 +233,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextDescription}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerDescription(event.target.value);
                     }}
                   />
@@ -252,7 +248,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextRestriction}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerRestriction(event.target.value);
                     }}
                   />
@@ -267,7 +263,7 @@ function EditModal(props) {
                     id="focusedInput"
                     type="text"
                     value={inputTextFunction}
-                    onChange={(event) => {
+                    onChange={event => {
                       inputHandlerFunction(event.target.value);
                     }}
                   />

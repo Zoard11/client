@@ -1,12 +1,12 @@
-import React from "react";
-import { useBetween } from "use-between";
-import { useShareableState } from "./UseBetween";
+import React from 'react';
+import {useBetween} from 'use-between';
+import {useShareableState} from './UseBetween';
 
 const InformationSearch = () => {
-  const { setInputText, setCurrentPage, setShowAddNew } =
+  const {setInputText, setCurrentPage, setShowAddNew} =
     useBetween(useShareableState);
 
-  let inputHandler = (e) => {
+  let inputHandler = e => {
     setInputText(e);
     setCurrentPage(1);
   };
@@ -19,12 +19,12 @@ const InformationSearch = () => {
         placeholder="Search"
         aria-label="Search"
         aria-describedby="search-addon"
-        onChange={(event) => {
+        onChange={event => {
           inputHandler(event.target.value);
         }}
       />
 
-      {localStorage.getItem("permission") === "admin" && (
+      {localStorage.getItem('permission') === 'admin' && (
         <button className="btn-lg " onClick={() => setShowAddNew(true)}>
           <i className="bi bi-plus-square-fill fa-10x"></i>
           Add new ingredient

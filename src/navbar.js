@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {useCookies} from 'react-cookie';
 
 const NavBar = () => {
   // eslint-disable-next-line no-unused-vars
-  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const logout = () => {
     localStorage.clear();
-    removeCookie("token", { path: "/" });
-    window.location.href = "/";
+    removeCookie('token', {path: '/'});
+    window.location.href = '/';
   };
 
   return (
@@ -22,14 +22,14 @@ const NavBar = () => {
             Home
           </Link>
         </li>
-        {localStorage.getItem("permission") === "admin" && (
+        {localStorage.getItem('permission') === 'admin' && (
           <li className="nav-item">
             <Link className="nav-link" to="/upload">
               Upload
             </Link>
           </li>
         )}
-        {localStorage.getItem("permission") === "admin" && (
+        {localStorage.getItem('permission') === 'admin' && (
           <li className="nav-item">
             <Link className="nav-link" to="/users">
               Users
@@ -37,7 +37,7 @@ const NavBar = () => {
           </li>
         )}
 
-        {!localStorage.getItem("token") && (
+        {!localStorage.getItem('token') && (
           <li className="nav-item">
             <Link className="nav-link" to="/login">
               Login/Register
@@ -45,11 +45,11 @@ const NavBar = () => {
           </li>
         )}
       </ul>
-      {localStorage.getItem("username") && (
+      {localStorage.getItem('username') && (
         <span className="float-right">{localStorage.username}</span>
       )}
 
-      {localStorage.getItem("token") && (
+      {localStorage.getItem('token') && (
         <button className="nav-item mr-3 nav-link p-3" onClick={logout}>
           Logout
         </button>

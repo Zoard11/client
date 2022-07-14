@@ -1,13 +1,13 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { ipAddress } from "../constants";
-import UploadModal from "./UploadModal";
-import { useCookies } from "react-cookie";
+import axios from 'axios';
+import React, {useState} from 'react';
+import {ipAddress} from '../constants';
+import UploadModal from './UploadModal';
+import {useCookies} from 'react-cookie';
 
 axios.defaults.baseURL = ipAddress;
 
 const UploadPage = () => {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(['token']);
   const [selectedFile, setSelectedFile] = useState({});
   const [showMessage, setShowMessage] = useState(false);
   const [file, setFile] = useState({});
@@ -16,7 +16,7 @@ const UploadPage = () => {
     useState(false);
   const [showFailedUploadMessage, setShowFailedUploadMessage] = useState(false);
 
-  const onFileChange = (event) => {
+  const onFileChange = event => {
     setSelectedFile(event.target.files[0]);
     setFile(event.target);
   };
@@ -25,17 +25,17 @@ const UploadPage = () => {
     try {
       const formData = new FormData();
 
-      formData.append("file", selectedFile, selectedFile.name);
+      formData.append('file', selectedFile, selectedFile.name);
 
       axios
-        .post("/api/uploadfile", formData, {
+        .post('/api/uploadfile', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
             Authorization: cookies.token,
           },
           withCredentials: true,
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.status === 204) {
             setShowSuccessfullUploadMessage(true);
             setShowFailedUploadMessage(false);
@@ -57,7 +57,7 @@ const UploadPage = () => {
             setShowSuccessfullUploadMessage(false);
             setShowMessage(true);
           } else {
-            console.log("Error", error.message);
+            console.log('Error', error.message);
             setShowFailedUploadMessage(true);
             setShowSuccessfullUploadMessage(false);
             setShowMessage(true);
@@ -70,10 +70,10 @@ const UploadPage = () => {
       setShowMessage(true);
     }
     setSelectedFile({});
-    file.value = "";
+    file.value = '';
   };
 
-  const isEmpty = (obj) => {
+  const isEmpty = obj => {
     for (const value in obj) {
       return false;
     }

@@ -1,100 +1,100 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { ipAddress } from "../constants";
-import { useCookies } from "react-cookie";
-import LoginErrorModal from "./LoginErrorModal";
+import axios from 'axios';
+import React, {useState} from 'react';
+import {ipAddress} from '../constants';
+import {useCookies} from 'react-cookie';
+import LoginErrorModal from './LoginErrorModal';
 
 axios.defaults.baseURL = ipAddress;
 
 const LoginPage = () => {
   const [show, setShow] = useState(false);
-  const [message, setMessage] = useState("");
-  const [action, setAction] = useState("");
+  const [message, setMessage] = useState('');
+  const [action, setAction] = useState('');
 
   // eslint-disable-next-line no-unused-vars
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(['token']);
 
-  const [inputTextUsername, setInputTextUsername] = useState("");
-  const [inputTextPassword, setInputTextPassword] = useState("");
+  const [inputTextUsername, setInputTextUsername] = useState('');
+  const [inputTextPassword, setInputTextPassword] = useState('');
 
-  const [inputTextName, setInputTextName] = useState("");
+  const [inputTextName, setInputTextName] = useState('');
   const [inputTextPasswordRegister, setInputTextPasswordRegister] =
-    useState("");
+    useState('');
   const [inputTextPasswordRegisterRepeat, setInputTextPasswordRegisterRepeat] =
-    useState("");
+    useState('');
 
-  const inputHandlerUsername = (e) => {
+  const inputHandlerUsername = e => {
     setInputTextUsername(e);
   };
-  const inputHandlerPassword = (e) => {
+  const inputHandlerPassword = e => {
     setInputTextPassword(e);
   };
 
-  const inputHandlerName = (e) => {
+  const inputHandlerName = e => {
     setInputTextName(e);
   };
-  const inputHandlerPasswordRegister = (e) => {
+  const inputHandlerPasswordRegister = e => {
     setInputTextPasswordRegister(e);
   };
-  const inputHandlerPasswordRegisterRepeat = (e) => {
+  const inputHandlerPasswordRegisterRepeat = e => {
     setInputTextPasswordRegisterRepeat(e);
   };
 
   const login = async () => {
     await axios
-      .post("/api/auth/login", {
+      .post('/api/auth/login', {
         data: {
           username: inputTextUsername,
           password: inputTextPassword,
         },
       })
-      .then((resp) => {
+      .then(resp => {
         if (resp.status === 200) {
           const token = resp.data.token;
           const permission = resp.data.permission;
           const username = resp.data.username;
-          localStorage.setItem("token", token);
-          localStorage.setItem("permission", permission);
-          localStorage.setItem("username", username);
-          setCookie("token", token, { path: "/" });
-          window.location.href = "/";
+          localStorage.setItem('token', token);
+          localStorage.setItem('permission', permission);
+          localStorage.setItem('username', username);
+          setCookie('token', token, {path: '/'});
+          window.location.href = '/';
         }
       })
       .catch(function (error) {
-        setAction("Login");
+        setAction('Login');
         setMessage(error.response.data);
         setShow(true);
-        setInputTextPassword("");
+        setInputTextPassword('');
       });
   };
 
   const register = async () => {
     await axios
-      .post("/api/auth/register", {
+      .post('/api/auth/register', {
         data: {
           username: inputTextName,
           password: inputTextPasswordRegister,
           password2: inputTextPasswordRegisterRepeat,
         },
       })
-      .then((resp) => {
+      .then(resp => {
         if (resp.status === 200) {
           const token = resp.data.token;
           const permission = resp.data.permission;
           const username = resp.data.username;
-          localStorage.setItem("token", token);
-          localStorage.setItem("permission", permission);
-          localStorage.setItem("username", username);
-          setCookie("token", token, { path: "/" });
-          window.location.href = "/";
+          localStorage.setItem('token', token);
+          localStorage.setItem('permission', permission);
+          localStorage.setItem('username', username);
+          setCookie('token', token, {path: '/'});
+          window.location.href = '/';
         }
       })
       .catch(function (error) {
-        setAction("Register");
+        setAction('Register');
         setMessage(error.response.data);
         setShow(true);
-        setInputTextPasswordRegister("");
-        setInputTextPasswordRegisterRepeat("");
+        setInputTextPasswordRegister('');
+        setInputTextPasswordRegisterRepeat('');
       });
   };
 
@@ -110,7 +110,7 @@ const LoginPage = () => {
               type="name"
               className="form-control"
               value={inputTextUsername}
-              onChange={(event) => {
+              onChange={event => {
                 inputHandlerUsername(event.target.value);
               }}
             />
@@ -122,7 +122,7 @@ const LoginPage = () => {
               type="password"
               className="form-control"
               value={inputTextPassword}
-              onChange={(event) => {
+              onChange={event => {
                 inputHandlerPassword(event.target.value);
               }}
             />
@@ -131,8 +131,7 @@ const LoginPage = () => {
           <button
             type="button"
             className="btn btn-primary btn-block mb-4"
-            onClick={login}
-          >
+            onClick={login}>
             Sign in
           </button>
         </div>
@@ -146,7 +145,7 @@ const LoginPage = () => {
               type="name"
               className="form-control"
               value={inputTextName}
-              onChange={(event) => {
+              onChange={event => {
                 inputHandlerName(event.target.value);
               }}
             />
@@ -158,7 +157,7 @@ const LoginPage = () => {
               type="password"
               className="form-control"
               value={inputTextPasswordRegister}
-              onChange={(event) => {
+              onChange={event => {
                 inputHandlerPasswordRegister(event.target.value);
               }}
             />
@@ -170,7 +169,7 @@ const LoginPage = () => {
               type="password"
               className="form-control"
               value={inputTextPasswordRegisterRepeat}
-              onChange={(event) => {
+              onChange={event => {
                 inputHandlerPasswordRegisterRepeat(event.target.value);
               }}
             />
@@ -179,8 +178,7 @@ const LoginPage = () => {
           <button
             type="button"
             className="btn btn-primary btn-block mb-4"
-            onClick={register}
-          >
+            onClick={register}>
             Register
           </button>
         </div>

@@ -1,11 +1,11 @@
-import React from "react";
-import { Route } from "react-router-dom";
-import InformationPage from "./informationPage/InformationPage";
-import UploadPage from "./uploadPage/uploadPage";
-import LoginPage from "./loginPage/LoginPage";
-import UsersPage from "./usersPage/UsersPage";
-import NavBar from "./navbar";
-import { BrowserRouter, Routes } from "react-router-dom";
+import React from 'react';
+import {Route} from 'react-router-dom';
+import InformationPage from './informationPage/InformationPage';
+import UploadPage from './uploadPage/uploadPage';
+import LoginPage from './loginPage/LoginPage';
+import UsersPage from './usersPage/UsersPage';
+import NavBar from './navbar';
+import {BrowserRouter, Routes} from 'react-router-dom';
 
 const App = () => {
   return (

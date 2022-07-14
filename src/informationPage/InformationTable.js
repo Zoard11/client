@@ -1,13 +1,13 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { ipAddress } from "../constants";
-import Table from "./Table";
-import { useBetween } from "use-between";
-import { useShareableState } from "./UseBetween";
-import EditModal from "./EditModal";
-import ModalResponse from "./ModalResponse";
-import DeleteModalConfirm from "./DeleteModalConfirm";
-import AddNewModal from "./AddNewModal";
+import axios from 'axios';
+import React, {useState, useEffect} from 'react';
+import {ipAddress} from '../constants';
+import Table from './Table';
+import {useBetween} from 'use-between';
+import {useShareableState} from './UseBetween';
+import EditModal from './EditModal';
+import ModalResponse from './ModalResponse';
+import DeleteModalConfirm from './DeleteModalConfirm';
+import AddNewModal from './AddNewModal';
 
 axios.defaults.baseURL = ipAddress;
 
@@ -64,7 +64,7 @@ const InformationTable = () => {
     setCurrentPage(-1);
   };
 
-  const changePageButton = (index) => {
+  const changePageButton = index => {
     setCurrentPage(index);
   };
 
@@ -79,7 +79,7 @@ const InformationTable = () => {
       }
 
       await axios
-        .get("/api", {
+        .get('/api', {
           params: {
             dataPerPage: dataPerPage,
             indexOfFirstResult: indexOfFirstResult,
@@ -87,7 +87,7 @@ const InformationTable = () => {
           },
           withCredentials: true,
         })
-        .then((resp) => {
+        .then(resp => {
           if (resp.status === 200) {
             setError(false);
 
@@ -191,8 +191,7 @@ const InformationTable = () => {
             <li className="page-item ">
               <button
                 className="page-link"
-                onClick={() => changePageButton(currentPage - 2)}
-              >
+                onClick={() => changePageButton(currentPage - 2)}>
                 {currentPage - 2}
               </button>
             </li>
@@ -201,8 +200,7 @@ const InformationTable = () => {
             <li className="page-item ">
               <button
                 className="page-link"
-                onClick={() => changePageButton(currentPage - 1)}
-              >
+                onClick={() => changePageButton(currentPage - 1)}>
                 {currentPage - 1}
               </button>
             </li>
@@ -245,8 +243,7 @@ const InformationTable = () => {
           <li className="page-item ">
             <button
               className="page-link"
-              onClick={() => changePageButton(currentPage - 2)}
-            >
+              onClick={() => changePageButton(currentPage - 2)}>
               {currentPage - 2}
             </button>
           </li>
@@ -255,8 +252,7 @@ const InformationTable = () => {
           <li className="page-item ">
             <button
               className="page-link"
-              onClick={() => changePageButton(currentPage - 1)}
-            >
+              onClick={() => changePageButton(currentPage - 1)}>
               {currentPage - 1}
             </button>
           </li>
@@ -270,8 +266,7 @@ const InformationTable = () => {
           <li className="page-item ">
             <button
               className="page-link"
-              onClick={() => changePageButton(currentPage + 1)}
-            >
+              onClick={() => changePageButton(currentPage + 1)}>
               {currentPage + 1}
             </button>
           </li>
@@ -280,8 +275,7 @@ const InformationTable = () => {
           <li className="page-item ">
             <button
               className="page-link"
-              onClick={() => changePageButton(currentPage + 2)}
-            >
+              onClick={() => changePageButton(currentPage + 2)}>
               {currentPage + 2}
             </button>
           </li>
