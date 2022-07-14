@@ -64,7 +64,7 @@ function Table(props) {
     data,
   });
 
-  const {setEditIngredientId, setDeleteIngredientId} =
+  const {setEditIngredientId, setDeleteIngredientId,setOrder,refresh, setRefresh} =
     useBetween(useShareableState);
 
   const editButton = id => {
@@ -89,6 +89,28 @@ function Table(props) {
                 return (
                   <th key={key} {...restColumnProps}>
                     {column.render('Header')}
+                    {column.Header === 'INCI name' && (
+                      <>
+                      <a
+                      className="sort-down-a"
+                      onClick={() => {
+                        setOrder('asc');
+                        setRefresh(!refresh);
+                      }}
+                    >
+                      <i className="bi bi-sort-alpha-down"></i>
+                    </a>
+                      <a
+                      className="sort-up-a"
+                      onClick={() => {
+                        setOrder('desc');
+                        setRefresh(!refresh);
+                      }}
+                    >
+                      <i className="bi bi-sort-alpha-down-alt"></i>
+                    </a>
+                    </>
+                    )}
                   </th>
                 );
               })}

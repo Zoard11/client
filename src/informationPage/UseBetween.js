@@ -10,6 +10,8 @@ export const useShareableState = () => {
   const [deleteIngredientId, setDeleteIngredientId] = useState(-1);
   const [action, setAction] = useState('');
   const [showAddNew, setShowAddNew] = useState(false);
+  const [order, setOrder] = useState('');
+  const [refresh, setRefresh] = useState(false);
 
   return {
     inputText,
@@ -30,5 +32,9 @@ export const useShareableState = () => {
     setAction,
     showAddNew,
     setShowAddNew,
+    order,
+    setOrder,
+    refresh,
+    setRefresh
   };
 };

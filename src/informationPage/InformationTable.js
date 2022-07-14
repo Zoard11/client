@@ -30,10 +30,12 @@ const InformationTable = () => {
     action,
     showAddNew,
     setShowAddNew,
+    order,
+    refresh,
+    setRefresh
   } = useBetween(useShareableState);
 
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
 
   const [error, setError] = useState(false);
 
@@ -84,6 +86,7 @@ const InformationTable = () => {
             dataPerPage: dataPerPage,
             indexOfFirstResult: indexOfFirstResult,
             search: inputText,
+            order: order,
           },
           withCredentials: true,
         })
