@@ -85,7 +85,7 @@ function EditModal(props) {
     useBetween(useShareableState);
 
   const editIngredient = async () => {
-    await axios(`/api/update/${props.ingredient.Id}`, {
+    await axios(`/api/${props.ingredient.Id}`, {
       method: 'put',
       data: {
         inputTextCosingRefNo: inputTextCosingRefNo,

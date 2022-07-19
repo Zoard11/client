@@ -28,7 +28,7 @@ const UploadPage = () => {
       formData.append('file', selectedFile, selectedFile.name);
 
       axios
-        .post('/api/uploadfile', formData, {
+        .post('/api/ingredients', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: cookies.token,
