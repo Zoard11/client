@@ -29,7 +29,7 @@ function DeleteModalConfirm(props) {
 
   const deleteIngredient = async () => {
     await axios
-      .delete(`/api/${props.deleteIngredientId}`, {
+      .delete(`/api/ingredients/${props.deleteIngredientId}`, {
         withCredentials: true,
         headers: {
           Authorization: cookies.token,

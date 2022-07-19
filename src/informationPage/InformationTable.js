@@ -81,7 +81,7 @@ const InformationTable = () => {
       }
 
       await axios
-        .get('/api', {
+        .get('/api/ingredients', {
           params: {
             dataPerPage: dataPerPage,
             indexOfFirstResult: indexOfFirstResult,
