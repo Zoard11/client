@@ -24,3 +24,7 @@ div.users {
 div.inner {
   margin: 10px;
 }
+
+#username {
+  margin: 5px;
+}

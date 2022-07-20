@@ -46,7 +46,9 @@ const NavBar = () => {
         )}
       </ul>
       {localStorage.getItem('username') && (
+        <div id='username'>
         <span className="float-right">{localStorage.username}</span>
+        </div>
       )}
 
       {localStorage.getItem('token') && (
